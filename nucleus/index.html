@@ -1,0 +1,1339 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Nucleus | TecDev-Core-OS</title>
+    <meta
+      name="description"
+      content="A public-safe Nucleus mirror for TecDev-Core-OS status, proof links, channel boundaries, and approval gates."
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #12151d;
+        --muted: #5f6877;
+        --paper: #f6f8fb;
+        --panel: #ffffff;
+        --line: #dbe2ec;
+        --green: #0b6e4f;
+        --navy: #243b5a;
+        --orange: #b86b18;
+        --red: #8a2f2a;
+        --shadow: 0 18px 45px rgba(18, 21, 29, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        background: var(--paper);
+        color: var(--ink);
+        font: 16px/1.55 "Avenir Next", "Segoe UI", system-ui, sans-serif;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .wrap {
+        width: min(1120px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      header {
+        padding: 48px 0 28px;
+        background:
+          linear-gradient(135deg, rgba(11, 110, 79, 0.14), transparent 42%),
+          linear-gradient(225deg, rgba(184, 107, 24, 0.12), transparent 42%),
+          #ffffff;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .eyebrow {
+        margin: 0 0 10px;
+        color: var(--green);
+        font-size: 0.78rem;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 760px;
+        margin-bottom: 14px;
+        font-size: clamp(2.7rem, 8vw, 6.4rem);
+        line-height: 0.94;
+      }
+
+      h2 {
+        margin-bottom: 12px;
+        font-size: clamp(1.7rem, 4vw, 3rem);
+        line-height: 1;
+      }
+
+      p {
+        color: var(--muted);
+      }
+
+      .lede {
+        max-width: 720px;
+        font-size: clamp(1.05rem, 2vw, 1.25rem);
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 22px;
+      }
+
+      .button {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        color: var(--ink);
+        font-weight: 850;
+        text-decoration: none;
+      }
+
+      .button.primary {
+        border-color: var(--green);
+        background: var(--green);
+        color: #ffffff;
+      }
+
+      .button.compact {
+        min-height: 38px;
+        padding: 8px 11px;
+        font-size: 0.9rem;
+      }
+
+      main {
+        display: grid;
+        gap: 24px;
+        padding: 28px 0 48px;
+      }
+
+      section,
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+      }
+
+      section {
+        padding: clamp(18px, 4vw, 28px);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .card {
+        min-height: 152px;
+        padding: 16px;
+        box-shadow: none;
+      }
+
+      .card span {
+        display: block;
+        color: var(--green);
+        font-size: 0.74rem;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .card strong {
+        display: block;
+        margin-top: 10px;
+        font-size: 1.05rem;
+      }
+
+      .card small {
+        display: block;
+        margin-top: 10px;
+        color: var(--muted);
+      }
+
+      .status-list {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .status-list li {
+        display: grid;
+        grid-template-columns: minmax(140px, 0.28fr) minmax(0, 1fr);
+        gap: 12px;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fbfcfe;
+      }
+
+      .status-list b {
+        color: var(--navy);
+      }
+
+      .guardrails {
+        border-left: 5px solid var(--red);
+      }
+
+      .app-note {
+        display: grid;
+        gap: 4px;
+        margin: 0 0 16px;
+        padding: 12px;
+        border: 1px solid rgba(184, 107, 24, 0.35);
+        border-radius: 8px;
+        background: #fff8ee;
+        color: var(--ink);
+      }
+
+      .app-note b {
+        color: var(--orange);
+      }
+
+      .review-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 16px;
+      }
+
+      .review-board {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .review-card {
+        display: grid;
+        gap: 12px;
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fbfcfe;
+      }
+
+      .review-card header {
+        display: grid;
+        gap: 8px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+      }
+
+      .review-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .pill {
+        display: inline-flex;
+        min-height: 28px;
+        align-items: center;
+        justify-content: center;
+        padding: 4px 8px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #ffffff;
+        color: var(--navy);
+        font-size: 0.76rem;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .pill.decision-approved {
+        border-color: rgba(11, 110, 79, 0.3);
+        background: rgba(11, 110, 79, 0.1);
+        color: var(--green);
+      }
+
+      .pill.decision-fix,
+      .pill.decision-blocked {
+        border-color: rgba(138, 47, 42, 0.3);
+        background: rgba(138, 47, 42, 0.09);
+        color: var(--red);
+      }
+
+      .pill.decision-backlog {
+        border-color: rgba(36, 59, 90, 0.24);
+        background: rgba(36, 59, 90, 0.08);
+        color: var(--navy);
+      }
+
+      .review-card h3 {
+        margin: 0;
+        font-size: 1.12rem;
+        line-height: 1.22;
+      }
+
+      .review-card p {
+        margin: 0;
+      }
+
+      .review-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .decision-button {
+        min-height: 40px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #ffffff;
+        color: var(--ink);
+        font: inherit;
+        font-weight: 850;
+        cursor: pointer;
+      }
+
+      .decision-button[aria-pressed="true"] {
+        border-color: var(--green);
+        background: var(--green);
+        color: #ffffff;
+      }
+
+      .comment-box {
+        width: 100%;
+        min-height: 86px;
+        resize: vertical;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 10px;
+        background: #ffffff;
+        color: var(--ink);
+        font: inherit;
+      }
+
+      .packet-output {
+        width: 100%;
+        min-height: 180px;
+        margin-top: 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 12px;
+        background: #0f1720;
+        color: #f4f7fb;
+        font: 0.9rem/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+
+      .loop-map {
+        display: grid;
+        gap: 12px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .loop-map li {
+        display: grid;
+        grid-template-columns: minmax(150px, 0.28fr) minmax(0, 1fr);
+        gap: 12px;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fbfcfe;
+      }
+
+      .loop-map b {
+        color: var(--green);
+      }
+
+      .guardrails ul {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px 18px;
+        margin-bottom: 0;
+        color: var(--muted);
+        font-weight: 760;
+      }
+
+      .calendar-toolbar,
+      .calendar-summary {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .calendar-toolbar label {
+        display: grid;
+        gap: 6px;
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .calendar-toolbar select {
+        min-height: 42px;
+        padding: 0 10px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #ffffff;
+        color: var(--ink);
+        font: inherit;
+      }
+
+      .calendar-summary article,
+      .content-card,
+      .mini-panel {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fbfcfe;
+      }
+
+      .calendar-summary article {
+        min-height: 104px;
+        padding: 14px;
+      }
+
+      .calendar-summary span,
+      .calendar-summary strong {
+        display: block;
+      }
+
+      .calendar-summary span {
+        color: var(--green);
+        font-size: 0.74rem;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .calendar-summary strong {
+        margin-top: 8px;
+        font-size: 1.8rem;
+      }
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .content-card {
+        display: grid;
+        gap: 10px;
+        min-height: 280px;
+        align-content: start;
+        padding: 14px;
+      }
+
+      .content-card h3 {
+        margin-bottom: 0;
+        font-size: 1rem;
+        line-height: 1.25;
+      }
+
+      .content-meta,
+      .content-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .content-meta span,
+      .content-tags span {
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: #ffffff;
+        color: var(--navy);
+        font-size: 0.72rem;
+        font-weight: 900;
+      }
+
+      .content-tags.risk span {
+        background: #ffe8e6;
+        color: var(--red);
+      }
+
+      .content-row {
+        display: grid;
+        gap: 3px;
+      }
+
+      .content-row b {
+        font-size: 0.76rem;
+        text-transform: uppercase;
+      }
+
+      .content-row small {
+        color: var(--muted);
+      }
+
+      .calendar-review {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .mini-panel {
+        display: grid;
+        gap: 8px;
+        align-content: start;
+        padding: 14px;
+      }
+
+      .mini-panel h3 {
+        margin-bottom: 0;
+      }
+
+      .mini-list {
+        display: grid;
+        gap: 8px;
+      }
+
+      .mini-list div {
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #ffffff;
+      }
+
+      .mini-list span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+
+      footer {
+        padding: 22px 0 36px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 860px) {
+        .grid,
+        .review-board,
+        .content-grid,
+        .calendar-review,
+        .guardrails ul {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 620px) {
+        header {
+          padding-top: 34px;
+        }
+
+        .grid,
+        .review-board,
+        .content-grid,
+        .calendar-review,
+        .calendar-toolbar,
+        .calendar-summary,
+        .guardrails ul,
+        .loop-map li,
+        .status-list li,
+        .review-actions {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap">
+        <p class="eyebrow">TecDev-Core-OS</p>
+        <h1>The Nucleus public status mirror.</h1>
+        <p class="lede">
+          A sanitized GitHub Pages surface for channel boundaries, proof links, and approval-gated
+          operating status. The private local Nucleus remains the source of truth for internal paths,
+          ledgers, and execution details.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="./bot-funding/">Open BOT funding scout</a>
+          <a class="button" href="#content-calendar">Open content calendar</a>
+          <a class="button" href="../proofs/">Open proof library</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section aria-labelledby="channels">
+        <p class="eyebrow">Channels</p>
+        <h2 id="channels">One owner per lane.</h2>
+        <div class="grid">
+          <article class="card">
+            <span>OPS</span>
+            <strong>The Nucleus</strong>
+            <small>Coordination, approvals, backlog, runbooks, status mirrors, and tool gaps.</small>
+          </article>
+          <article class="card">
+            <span>JW</span>
+            <strong>JWTechDev.ai</strong>
+            <small>Publishing, cloud/AI education assets, articles, content systems, and site work.</small>
+          </article>
+          <article class="card">
+            <span>JYW</span>
+            <strong>JoshYouWut</strong>
+            <small>Music site, beat store readiness, offers, inquiry flows, and catalog surfaces.</small>
+          </article>
+          <article class="card">
+            <span>BOT</span>
+            <strong>BOT Funding</strong>
+            <small>Funding scout, validation, candidate packs, and approval-ready draft prep.</small>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="status">
+        <p class="eyebrow">Current Public Status</p>
+        <h2 id="status">Safe review surfaces are live-ready.</h2>
+        <ul class="status-list">
+          <li>
+            <b>Nucleus mirror</b>
+            <span>Public-safe dashboard prepared for GitHub Pages. Private ops data stays local.</span>
+          </li>
+          <li>
+            <b>BOT funding scout</b>
+            <span>Daily scout pages are dated artifacts and roll up into the single BOT Funding lane.</span>
+          </li>
+          <li>
+            <b>Proof library</b>
+            <span>Static review pages can be opened on mobile without exposing private ledgers.</span>
+          </li>
+          <li>
+            <b>Automation hygiene</b>
+            <span>The daily BOT scout is routed to the canonical BOT thread instead of creating duplicate channels.</span>
+          </li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="review-app">
+        <p class="eyebrow">Review App</p>
+        <h2 id="review-app">Approve, comment, and package decisions.</h2>
+        <div class="app-note">
+          <b>Local draft only.</b>
+          <span>
+            Decisions and comments stay in this browser until copied or exported. This page does not
+            write to GitHub, Todoist, Slack, email, Drive, forms, or any backend.
+          </span>
+        </div>
+        <p>
+          Use this as a mobile approval inbox. Copy the packet back into Codex or a GitHub issue when
+          a decision should become part of the private source of truth. For listener pickup, export
+          the packet and route it into the local Nucleus approval inbox.
+        </p>
+        <div class="review-toolbar">
+          <span id="reviewSummary" aria-live="polite">Loading review queue...</span>
+          <div class="actions">
+            <button class="button primary compact" id="copyPacket" type="button">Copy approval packet</button>
+            <button class="button compact" id="downloadPacket" type="button">Download JSON</button>
+          </div>
+        </div>
+        <div class="review-board" id="reviewBoard"></div>
+        <textarea
+          class="packet-output"
+          id="packetOutput"
+          aria-label="Approval packet preview"
+          readonly
+        ></textarea>
+      </section>
+
+      <section aria-labelledby="content-calendar" id="content-calendar">
+        <p class="eyebrow">Global Content Calendar</p>
+        <h2>Week of July 20, 2026 planning board.</h2>
+        <div class="app-note">
+          <b>Review only.</b>
+          <span>
+            This public-safe mirror shows planned content, approvals, risk flags, and repurpose links.
+            It does not publish, schedule, upload, send, capture leads, activate checkout, or write to a backend.
+          </span>
+        </div>
+        <div class="calendar-toolbar" aria-label="Content calendar filters">
+          <label>
+            <span>Brand</span>
+            <select id="calendarBrand"><option value="all">All brands</option></select>
+          </label>
+          <label>
+            <span>Platform</span>
+            <select id="calendarPlatform"><option value="all">All platforms</option></select>
+          </label>
+          <label>
+            <span>Status</span>
+            <select id="calendarStatus"><option value="all">All statuses</option></select>
+          </label>
+          <label>
+            <span>Risk</span>
+            <select id="calendarRisk">
+              <option value="all">All risk levels</option>
+              <option value="flagged">Flagged only</option>
+              <option value="clean">No flags</option>
+            </select>
+          </label>
+        </div>
+        <div class="calendar-summary">
+          <article><span>Total ideas</span><strong id="calendarTotal">0</strong></article>
+          <article><span>Needs approval</span><strong id="calendarApprovals">0</strong></article>
+          <article><span>Risk review</span><strong id="calendarRisks">0</strong></article>
+          <article><span>Repurpose links</span><strong id="calendarRepurpose">0</strong></article>
+        </div>
+        <div class="content-grid" id="calendarGrid" aria-live="polite"></div>
+        <div class="calendar-review">
+          <article class="mini-panel">
+            <h3>Approval Queue</h3>
+            <div class="mini-list" id="calendarApprovalQueue"></div>
+          </article>
+          <article class="mini-panel">
+            <h3>Risk Queue</h3>
+            <div class="mini-list" id="calendarRiskQueue"></div>
+          </article>
+          <article class="mini-panel">
+            <h3>Repurpose Map</h3>
+            <div class="mini-list" id="calendarRepurposeMap"></div>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="loops">
+        <p class="eyebrow">Self-Improving Loops</p>
+        <h2 id="loops">The operating model is the product proof.</h2>
+        <p>
+          The Nucleus now models each brand as a loop: read context, do bounded work, evaluate the
+          result, update memory, and escalate only the decisions that need human judgment.
+        </p>
+        <ul class="loop-map">
+          <li>
+            <b>Nucleus</b>
+            <span>Coordinates ownership, approvals, blockers, runbooks, mobile sync, and public-safe proof surfaces.</span>
+          </li>
+          <li>
+            <b>JWTechDev.ai</b>
+            <span>Turns the internal AI operating system into articles, education assets, and the AI Ops Starter Kit offer.</span>
+          </li>
+          <li>
+            <b>JoshYouWut</b>
+            <span>Improves offer routing, catalog metadata, artist-fit language, and lead quality after each review.</span>
+          </li>
+          <li>
+            <b>BOT Funding</b>
+            <span>Uses every scout to improve opportunity scoring, blockers, validation notes, and draft readiness.</span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="guardrails" aria-labelledby="guardrails">
+        <p class="eyebrow">Guardrails</p>
+        <h2 id="guardrails">Public page, private source of truth.</h2>
+        <p>
+          This mirror is intentionally limited. It should help with mobile review and coordination,
+          but it should not expose approval ledgers, local machine paths, internal notes, tokens,
+          drafts, or operational secrets.
+        </p>
+        <ul>
+          <li>No Slack, email, or form sends from this page.</li>
+          <li>No portal logins, grant submissions, or funder outreach.</li>
+          <li>No payment, checkout, DNS, or backend activation.</li>
+          <li>No private approval ledger or local filesystem paths.</li>
+          <li>No Google Drive uploads, moves, or deletes.</li>
+          <li>No public lead capture without a separate approved endpoint.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="wrap">
+      <span>Public mirror updated June 13, 2026. Private Nucleus remains local-first.</span>
+    </footer>
+    <script>
+      const reviewItems = [
+        {
+          id: "nucleus-review-app",
+          lane: "OPS",
+          title: "Make the public Nucleus page app-like",
+          ask: "Use local comments, decisions, and exported approval packets as the first mobile review layer.",
+          recommendation: "Approve as local-only review workflow.",
+          gate: "Backend writes, GitHub issue creation, Todoist sync, and outbound comments remain approval-gated."
+        },
+        {
+          id: "self-improving-loops",
+          lane: "OPS",
+          title: "Keep self-improving loops as the operating model",
+          ask: "Treat every channel as a loop that reads context, performs bounded work, evaluates output, updates memory, and escalates gates.",
+          recommendation: "Approve for Nucleus governance.",
+          gate: "Live automations and external actions still need explicit approval."
+        },
+        {
+          id: "jw-ai-ops-starter-kit",
+          lane: "JW",
+          title: "Move AI Ops Starter Kit into JW planning",
+          ask: "Use the internal operating system as proof for JWTechDev.ai content and offer design.",
+          recommendation: "Approve planning only; execution belongs in the JW channel.",
+          gate: "Lead capture, paid offer activation, DNS, and outbound promotion remain gated."
+        },
+        {
+          id: "jyw-catalog-loop",
+          lane: "JYW",
+          title: "Apply the loop model to JoshYouWut catalog work",
+          ask: "Improve offer routing, metadata, artist-fit language, and inquiry quality from each review cycle.",
+          recommendation: "Backlog for JYW execution.",
+          gate: "Checkout, payment, file delivery, and public inquiry capture remain gated."
+        },
+        {
+          id: "bot-funding-memory",
+          lane: "BOT",
+          title: "Keep BOT funding scout memory clean",
+          ask: "Use every scout to improve scoring, blockers, validation notes, and draft readiness without creating duplicate channels.",
+          recommendation: "Approve local-only status tracking.",
+          gate: "Submissions, outreach, portal logins, Slack/email sends, and Drive movement remain gated."
+        }
+      ];
+
+      const contentItems = [
+        {
+          id: "jw-yt-dumb-technical-problems-20260720",
+          brand: "JWTechDev.ai",
+          platform: "YouTube",
+          title: "The Dumbest Technical Problems Teach The Best Infrastructure Lessons",
+          source: "$yt",
+          status: "drafted",
+          date: "2026-07-21",
+          approvals: ["review script", "approve recording", "approve upload"],
+          risks: ["fact-check"],
+          sourceLabel: "JW YouTube content bank",
+          cta: "Start with a troubleshooting checklist before blaming the cloud.",
+          repurpose: ["JW TikTok: Dumbest IT Fix", "JW Blog: Guardrails Before Tools"]
+        },
+        {
+          id: "jw-tt-dumbest-it-fix-20260720",
+          brand: "JWTechDev.ai",
+          platform: "TikTok",
+          title: "Dumbest Technical Problem You Solved At Work",
+          source: "$tt",
+          status: "drafted",
+          date: "2026-07-21",
+          approvals: ["approve recording", "approve upload"],
+          risks: [],
+          sourceLabel: "JW TikTok content bank",
+          cta: "Drop the dumbest fix.",
+          repurpose: ["JW YouTube: Dumb Technical Problems"]
+        },
+        {
+          id: "jw-yt-in-person-events-20260720",
+          brand: "JWTechDev.ai",
+          platform: "YouTube",
+          title: "In-Person Tech Events Are Still A Career Cheat Code",
+          source: "$yt",
+          status: "drafted",
+          date: "2026-07-23",
+          approvals: ["review script", "approve recording", "approve upload"],
+          risks: [],
+          sourceLabel: "JW YouTube content bank",
+          cta: "Go outside professionally, then bring the context back to cloud work.",
+          repurpose: ["JW TikTok: In-Person Events"]
+        },
+        {
+          id: "jw-tt-in-person-events-20260720",
+          brand: "JWTechDev.ai",
+          platform: "TikTok",
+          title: "In-Person Events Are Still A Tech Advantage",
+          source: "$tt",
+          status: "drafted",
+          date: "2026-07-23",
+          approvals: ["approve recording", "approve upload"],
+          risks: [],
+          sourceLabel: "JW TikTok content bank",
+          cta: "What is the best event you have been to?",
+          repurpose: ["JW YouTube: In-Person Events"]
+        },
+        {
+          id: "jw-blog-guardrails-before-tools-20260720",
+          brand: "JWTechDev.ai",
+          platform: "Blog",
+          title: "AI Agents Need Guardrails Before They Need More Tools",
+          source: "manual",
+          status: "review",
+          date: "2026-07-22",
+          approvals: ["fresh source check", "publish readiness review", "site integration approval"],
+          risks: ["fact-check", "platform"],
+          sourceLabel: "JW blog draft packet",
+          cta: "Write your approval gates before connecting another AI tool.",
+          repurpose: ["JW YouTube: Dumb Technical Problems"]
+        },
+        {
+          id: "jw-blog-training-arc-20260720",
+          brand: "JWTechDev.ai",
+          platform: "Blog",
+          title: "Why Every AI Agent Needs A Training Arc",
+          source: "manual",
+          status: "idea",
+          date: "2026-07-24",
+          approvals: ["draft article", "rights-safe analogy review", "site integration approval"],
+          risks: ["copyright", "fact-check"],
+          sourceLabel: "JW weekly content packet",
+          cta: "Build the local proof before activating the live system.",
+          repurpose: ["Experimental: Sleeper System"]
+        },
+        {
+          id: "jyw-yt-analytics-project-20260720",
+          brand: "JoshYouWut",
+          platform: "YouTube",
+          title: "I Turned Myself Into An Analytics Project",
+          source: "$yt",
+          status: "drafted",
+          date: "2026-07-21",
+          approvals: ["review script", "approve recording", "approve upload"],
+          risks: ["medical"],
+          sourceLabel: "JYW YouTube content bank",
+          cta: "Health data will expose your little narratives.",
+          repurpose: ["JYW TikTok: Wearables Analytics"]
+        },
+        {
+          id: "jyw-tt-wearables-analytics-20260720",
+          brand: "JoshYouWut",
+          platform: "TikTok",
+          title: "I Turned Myself Into An Analytics Project",
+          source: "$tt",
+          status: "drafted",
+          date: "2026-07-21",
+          approvals: ["medical-claim review", "approve recording", "approve upload"],
+          risks: ["medical"],
+          sourceLabel: "JYW TikTok content bank",
+          cta: "Stay blessed, not stressed. Cloud Gang.",
+          repurpose: ["JYW YouTube: Analytics Project"]
+        },
+        {
+          id: "jyw-yt-sobriety-health-20260720",
+          brand: "JoshYouWut",
+          platform: "YouTube",
+          title: "Sobriety, Blood Pressure, And Blood Type Tater Tot",
+          source: "$yt",
+          status: "drafted",
+          date: "2026-07-24",
+          approvals: ["sensitivity review", "medical-claim review", "approve upload"],
+          risks: ["medical"],
+          sourceLabel: "JYW YouTube content bank",
+          cta: "Stay checked. Cloud Gang.",
+          repurpose: ["JYW TikTok: Blood Type Tater Tot"]
+        },
+        {
+          id: "jyw-tt-blood-type-tater-tot-20260720",
+          brand: "JoshYouWut",
+          platform: "TikTok",
+          title: "Blood Type Tater Tot",
+          source: "$tt",
+          status: "drafted",
+          date: "2026-07-24",
+          approvals: ["sensitivity review", "approve recording", "approve upload"],
+          risks: ["medical"],
+          sourceLabel: "JYW TikTok content bank",
+          cta: "Share the health wake-up call that humbled you.",
+          repurpose: ["JYW YouTube: Sobriety Health"]
+        },
+        {
+          id: "jyw-yt-aisle-seat-20260720",
+          brand: "JoshYouWut",
+          platform: "YouTube",
+          title: "Plane Aisle Seats Are Paid Assault",
+          source: "$yt",
+          status: "drafted",
+          date: "2026-07-23",
+          approvals: ["approve recording", "approve upload"],
+          risks: [],
+          sourceLabel: "JYW YouTube content bank",
+          cta: "Window, aisle, or suspicious middle-seat behavior?",
+          repurpose: ["JYW TikTok: Aisle Seat"]
+        },
+        {
+          id: "jyw-tt-aisle-seat-20260720",
+          brand: "JoshYouWut",
+          platform: "TikTok",
+          title: "Aisle Seat Is Paid Assault",
+          source: "$tt",
+          status: "drafted",
+          date: "2026-07-23",
+          approvals: ["approve recording", "approve upload"],
+          risks: [],
+          sourceLabel: "JYW TikTok content bank",
+          cta: "Window, aisle, or suspicious middle-seat behavior?",
+          repurpose: ["JYW YouTube: Aisle Seat"]
+        },
+        {
+          id: "jyw-tt-introvert-clothing-20260720",
+          brand: "JoshYouWut",
+          platform: "TikTok",
+          title: "Introvert With Extroverted Clothing",
+          source: "$tt",
+          status: "drafted",
+          date: "2026-07-22",
+          approvals: ["approve recording", "approve upload"],
+          risks: [],
+          sourceLabel: "JYW TikTok content bank",
+          cta: "Are you introverted with extroverted clothing?",
+          repurpose: []
+        },
+        {
+          id: "exp-yt-realistic-quirks-20260720",
+          brand: "Experimental Media",
+          platform: "YouTube",
+          title: "Realistic Quirks Would Be Deeply Inconvenient",
+          source: "$yt",
+          status: "drafted",
+          date: "2026-07-22",
+          approvals: ["rights-safe visual review", "approve upload"],
+          risks: ["copyright"],
+          sourceLabel: "Experimental YouTube content bank",
+          cta: "Drop your realistic quirk.",
+          repurpose: ["Experimental TikTok: Realistic Quirks"]
+        },
+        {
+          id: "exp-tt-realistic-quirks-20260720",
+          brand: "Experimental Media",
+          platform: "TikTok",
+          title: "What Would Your Quirk Be?",
+          source: "$tt",
+          status: "drafted",
+          date: "2026-07-22",
+          approvals: ["rights-safe visual review", "approve upload"],
+          risks: ["copyright"],
+          sourceLabel: "Experimental TikTok content bank",
+          cta: "Drop your realistic quirk.",
+          repurpose: ["Experimental YouTube: Realistic Quirks"]
+        },
+        {
+          id: "exp-yt-sleeper-system-20260720",
+          brand: "Experimental Media",
+          platform: "YouTube",
+          title: "Sleeper System Characters Are Elite",
+          source: "$yt",
+          status: "drafted",
+          date: "2026-07-25",
+          approvals: ["rights-safe visual review", "approve upload"],
+          risks: ["copyright"],
+          sourceLabel: "Experimental YouTube content bank",
+          cta: "Name your favorite sleeper system character type.",
+          repurpose: ["Experimental TikTok: Sleeper System", "JW Blog: Training Arc"]
+        },
+        {
+          id: "exp-tt-sleeper-system-20260720",
+          brand: "Experimental Media",
+          platform: "TikTok",
+          title: "The Sleeper System",
+          source: "$tt",
+          status: "drafted",
+          date: "2026-07-25",
+          approvals: ["rights-safe visual review", "approve upload"],
+          risks: ["copyright"],
+          sourceLabel: "Experimental TikTok content bank",
+          cta: "Every squad needs one sleeper system.",
+          repurpose: ["Experimental YouTube: Sleeper System", "JW Blog: Training Arc"]
+        }
+      ];
+
+      const storageKey = "nucleus-public-review-v1";
+      const decisions = {
+        review: "Review",
+        approved: "Approved",
+        fix: "Needs fix",
+        backlog: "Backlog",
+        blocked: "Blocked"
+      };
+
+      const state = loadState();
+      const board = document.getElementById("reviewBoard");
+      const summary = document.getElementById("reviewSummary");
+      const packetOutput = document.getElementById("packetOutput");
+      const calendarControls = {
+        brand: document.getElementById("calendarBrand"),
+        platform: document.getElementById("calendarPlatform"),
+        status: document.getElementById("calendarStatus"),
+        risk: document.getElementById("calendarRisk"),
+        grid: document.getElementById("calendarGrid"),
+        total: document.getElementById("calendarTotal"),
+        approvals: document.getElementById("calendarApprovals"),
+        risks: document.getElementById("calendarRisks"),
+        repurpose: document.getElementById("calendarRepurpose"),
+        approvalQueue: document.getElementById("calendarApprovalQueue"),
+        riskQueue: document.getElementById("calendarRiskQueue"),
+        repurposeMap: document.getElementById("calendarRepurposeMap")
+      };
+
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(storageKey);
+          return raw ? JSON.parse(raw) : {};
+        } catch {
+          return {};
+        }
+      }
+
+      function saveState() {
+        localStorage.setItem(storageKey, JSON.stringify(state));
+        renderPacket();
+      }
+
+      function itemState(id) {
+        state[id] = state[id] || { decision: "review", comment: "" };
+        return state[id];
+      }
+
+      function setDecision(id, decision) {
+        itemState(id).decision = decision;
+        saveState();
+        render();
+      }
+
+      function setComment(id, comment) {
+        itemState(id).comment = comment;
+        saveState();
+        renderSummary();
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function renderSummary() {
+        const counts = reviewItems.reduce((acc, item) => {
+          const decision = itemState(item.id).decision;
+          acc[decision] = (acc[decision] || 0) + 1;
+          return acc;
+        }, {});
+        summary.textContent = `${counts.approved || 0} approved, ${counts.fix || 0} need fix, ${counts.backlog || 0} backlog, ${counts.blocked || 0} blocked, ${counts.review || 0} in review`;
+      }
+
+      function render() {
+        board.innerHTML = "";
+        reviewItems.forEach((item) => {
+          const saved = itemState(item.id);
+          const article = document.createElement("article");
+          article.className = "review-card";
+          article.dataset.card = item.id;
+          article.innerHTML = `
+            <header>
+              <div class="review-meta">
+                <span class="pill">${escapeHtml(item.lane)}</span>
+                <span class="pill decision-${escapeHtml(saved.decision)}">${escapeHtml(decisions[saved.decision])}</span>
+              </div>
+              <h3>${escapeHtml(item.title)}</h3>
+            </header>
+            <p>${escapeHtml(item.ask)}</p>
+            <p><b>Recommended:</b> ${escapeHtml(item.recommendation)}</p>
+            <p><b>Gate:</b> ${escapeHtml(item.gate)}</p>
+            <div class="review-actions" aria-label="Decision buttons for ${escapeHtml(item.title)}">
+              ${Object.entries(decisions)
+                .map(([key, label]) => `
+                  <button
+                    class="decision-button"
+                    type="button"
+                    data-id="${escapeHtml(item.id)}"
+                    data-decision="${escapeHtml(key)}"
+                    aria-pressed="${saved.decision === key ? "true" : "false"}"
+                  >${escapeHtml(label)}</button>
+                `)
+                .join("")}
+            </div>
+            <textarea
+              class="comment-box"
+              data-comment="${escapeHtml(item.id)}"
+              aria-label="Comment for ${escapeHtml(item.title)}"
+              placeholder="Add private-to-this-browser notes for the packet..."
+            >${escapeHtml(saved.comment)}</textarea>
+          `;
+          board.appendChild(article);
+        });
+
+        board.querySelectorAll("[data-decision]").forEach((button) => {
+          button.addEventListener("click", () => setDecision(button.dataset.id, button.dataset.decision));
+        });
+        board.querySelectorAll("[data-comment]").forEach((textarea) => {
+          textarea.addEventListener("input", () => setComment(textarea.dataset.comment, textarea.value));
+        });
+        renderSummary();
+        renderPacket();
+      }
+
+      function buildPacket() {
+        const savedAt = new Date().toLocaleString();
+        const lines = [
+          "# Nucleus Public Review Packet",
+          "",
+          `Saved locally: ${savedAt}`,
+          "Source: GitHub Pages local browser state",
+          "",
+          "No external write has been performed by this page.",
+          ""
+        ];
+
+        reviewItems.forEach((item) => {
+          const saved = itemState(item.id);
+          lines.push(`## [${item.lane}] ${item.title}`);
+          lines.push(`Decision: ${decisions[saved.decision]}`);
+          lines.push(`Recommended: ${item.recommendation}`);
+          lines.push(`Gate: ${item.gate}`);
+          lines.push(`Comment: ${saved.comment.trim() || "None"}`);
+          lines.push("");
+        });
+
+        return lines.join("\n");
+      }
+
+      function renderPacket() {
+        packetOutput.value = buildPacket();
+      }
+
+      function unique(values) {
+        return [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b));
+      }
+
+      function fillSelect(select, values, label) {
+        const current = select.value || "all";
+        select.innerHTML = `<option value="all">${label}</option>`;
+        values.forEach((value) => {
+          const option = document.createElement("option");
+          option.value = value;
+          option.textContent = value;
+          select.append(option);
+        });
+        select.value = values.includes(current) ? current : "all";
+      }
+
+      function filteredContentItems() {
+        return contentItems.filter((item) => {
+          const riskMode = calendarControls.risk.value;
+          return (
+            (calendarControls.brand.value === "all" || item.brand === calendarControls.brand.value) &&
+            (calendarControls.platform.value === "all" || item.platform === calendarControls.platform.value) &&
+            (calendarControls.status.value === "all" || item.status === calendarControls.status.value) &&
+            (riskMode === "all" || (riskMode === "flagged" && item.risks.length) || (riskMode === "clean" && !item.risks.length))
+          );
+        });
+      }
+
+      function renderMiniList(container, items, emptyText, meta) {
+        container.innerHTML = "";
+        if (!items.length) {
+          container.innerHTML = `<div><b>${escapeHtml(emptyText)}</b><span>Current filters have nothing in this queue.</span></div>`;
+          return;
+        }
+        items.slice(0, 8).forEach((item) => {
+          const row = document.createElement("div");
+          row.innerHTML = `<b>${escapeHtml(item.title)}</b><span>${escapeHtml(meta(item))}</span>`;
+          container.append(row);
+        });
+      }
+
+      function renderContentCalendar() {
+        fillSelect(calendarControls.brand, unique(contentItems.map((item) => item.brand)), "All brands");
+        fillSelect(calendarControls.platform, unique(contentItems.map((item) => item.platform)), "All platforms");
+        fillSelect(calendarControls.status, unique(contentItems.map((item) => item.status)), "All statuses");
+
+        const items = filteredContentItems();
+        const riskItems = items.filter((item) => item.risks.length);
+        const approvalItems = items.filter((item) => item.approvals.length);
+        const repurposeCount = items.reduce((count, item) => count + item.repurpose.length, 0);
+
+        calendarControls.total.textContent = items.length;
+        calendarControls.approvals.textContent = approvalItems.length;
+        calendarControls.risks.textContent = riskItems.length;
+        calendarControls.repurpose.textContent = repurposeCount;
+
+        calendarControls.grid.innerHTML = "";
+        items.forEach((item) => {
+          const card = document.createElement("article");
+          card.className = "content-card";
+          card.innerHTML = `
+            <div>
+              <div class="content-meta">
+                <span>${escapeHtml(item.brand)}</span>
+                <span>${escapeHtml(item.platform)}</span>
+                <span>${escapeHtml(item.source)}</span>
+                <span>${escapeHtml(item.status)}</span>
+              </div>
+              <h3>${escapeHtml(item.title)}</h3>
+            </div>
+            <div class="content-row"><b>Target</b><small>${escapeHtml(item.date)}</small></div>
+            <div class="content-row"><b>CTA / offer tie-in</b><small>${escapeHtml(item.cta)}</small></div>
+            <div class="content-row"><b>Approvals</b><div class="content-tags">${item.approvals.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}</div></div>
+            <div class="content-row"><b>Risk flags</b><div class="content-tags risk">${item.risks.length ? item.risks.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("") : "<small>No special flags.</small>"}</div></div>
+            <div class="content-row"><b>Source</b><small>${escapeHtml(item.sourceLabel)}</small></div>
+            <div class="content-row"><b>Repurpose</b><small>${escapeHtml(item.repurpose.join(" · ") || "No linked repurpose item yet.")}</small></div>
+          `;
+          calendarControls.grid.append(card);
+        });
+
+        renderMiniList(calendarControls.approvalQueue, approvalItems, "No approvals queued", (item) => `${item.brand} · ${item.platform} · ${item.approvals.join(", ")}`);
+        renderMiniList(calendarControls.riskQueue, riskItems, "No risk flags", (item) => `${item.brand} · ${item.platform} · ${item.risks.join(", ")}`);
+        renderMiniList(
+          calendarControls.repurposeMap,
+          items.filter((item) => item.repurpose.length),
+          "No repurpose links",
+          (item) => `${item.platform} -> ${item.repurpose.join(" · ")}`
+        );
+      }
+
+      document.getElementById("copyPacket").addEventListener("click", async () => {
+        const packet = buildPacket();
+        packetOutput.value = packet;
+        packetOutput.select();
+        try {
+          await navigator.clipboard.writeText(packet);
+          summary.textContent = "Approval packet copied. Paste it into Codex or GitHub when ready.";
+        } catch {
+          document.execCommand("copy");
+          summary.textContent = "Approval packet selected. Use copy from the browser if needed.";
+        }
+      });
+
+      document.getElementById("downloadPacket").addEventListener("click", () => {
+        const payload = {
+          savedAt: new Date().toISOString(),
+          source: "nucleus-public-review-v1",
+          note: "Browser-local review export. No external write was performed.",
+          items: reviewItems.map((item) => ({ ...item, ...itemState(item.id) }))
+        };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "nucleus-review-packet.json";
+        link.click();
+        URL.revokeObjectURL(url);
+      });
+
+      [calendarControls.brand, calendarControls.platform, calendarControls.status, calendarControls.risk].forEach((select) => {
+        select.addEventListener("change", renderContentCalendar);
+      });
+
+      renderContentCalendar();
+      render();
+    </script>
+  </body>
+</html>
